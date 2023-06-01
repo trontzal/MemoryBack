@@ -31,4 +31,14 @@ def read_uno(usuario):
     res=cur.execute("SELECT * FROM datos WHERE usuario =?", [usuario])
     datos=res.fetchall()
     con.close()
-    return datos
+    resultados = []
+    for dato in datos:
+        resultado = {
+            'id': dato[0],
+            'usuario': dato[1],
+            'puntos': dato[2],
+            'tipo_de_juego': dato[3]
+        }
+        resultados.append(resultado)
+    
+    return resultados
