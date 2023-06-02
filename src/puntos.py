@@ -5,3 +5,6 @@ def get_todos():
 
 def get_puntos_by_usuario(usuario):
     return read_uno(usuario)
+
+def post_puntos(new_puntos):
+    print(create(new_puntos))
