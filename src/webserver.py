@@ -14,9 +14,20 @@ def hello():
 def get_todo():
     return get_todos()
 
-@app.route('/todo/<usuario>', methods=['GET']) #devuelve todos los puntos de un usuario especifico
+@app.route('/todo/user/<usuario>', methods=['GET']) #devuelve todos los puntos de un usuario especifico
 def un_usuario(usuario):
     return get_puntos_by_usuario(usuario)
+
+@app.route('/todo/game/<tipo_de_juego>', methods=['GET']) #devuelve todos los puntos de un tipo de juego especifico)
+def tipo_de_juego(tipo_de_juego):
+    return get_puntos_by_tipo_de_juego(tipo_de_juego)
+
+@app.route('/todo/posicion/<usuario>/<tipo_de_juego>', methods=['GET']) #devuelve la posicion )
+def posicion(usuario, tipo_de_juego):
+    return get_posicion(usuario, tipo_de_juego)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 @app.route('/todo' , methods=['POST']) #Para guardar datos en la db
 def new_puntuacion():

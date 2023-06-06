@@ -24,7 +24,7 @@ def read_all():
     return resultados
 
 
-def read_uno(usuario):
+def read_por_usuario(usuario):
     con=sqlite3.connect("puntos.db")
     cur=con.cursor()
     res=cur.execute("SELECT * FROM datos WHERE usuario =?", [usuario])
@@ -41,6 +41,42 @@ def read_uno(usuario):
         resultados.append(resultado)
     
     return resultados
+
+
+def read_por_juego(tipo_de_juego):
+    con=sqlite3.connect("puntos.db")
+    cur=con.cursor()
+    res=cur.execute("SELECT * FROM datos WHERE tipo_de_juego =?", [tipo_de_juego])
+    datos=res.fetchall()
+    con.close()
+    resultados = []
+    for dato in datos:
+        resultado = {
+            'id': dato[0],
+            'usuario': dato[1],
+            'puntos': dato[2],
+            'tipo_de_juego': dato[3]
+        }
+        resultados.append(resultado)
+    
+    return resultados
+
+def read_posicion(usuario, tipo_de_juego):
+    con = sqlite3.connect("puntos.db")
+    cur = con.cursor()
+
+    # Obtener los puntos del usuario y el tipo de juego específico
+    cur.execute("SELECT puntos FROM datos WHERE usuario = ? AND tipo_de_juego = ?", (usuario, tipo_de_juego))
+    user_points = cur.fetchone()
+    
+    # Obtener la posición del usuario en función de los puntos
+    cur.execute("SELECT COUNT(*) FROM datos WHERE tipo_de_juego = ? AND puntos > ?", (tipo_de_juego, user_points[0]))
+    position = cur.fetchone()[0] + 1
+
+    con.close()
+
+    return position
+
 
 
 def create(new_puntos):
