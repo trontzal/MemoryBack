@@ -74,7 +74,7 @@ def read_posicion(usuario, tipo_de_juego):
     
     # Obtener la posición del usuario en función de los puntos
     cur.execute("SELECT COUNT(*) FROM datos WHERE tipo_de_juego = ? AND puntos > ?", (tipo_de_juego, user_points[0]))
-    position = cur.fetchone()[0] + 1
+    position = cur.fetchone()[0] +1
     print("Posición del usuario:", position)
 
     con.close()
