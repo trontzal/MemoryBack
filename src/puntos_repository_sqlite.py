@@ -78,9 +78,16 @@ def read_grafico(tipo_de_juego):
     con = sqlite3.connect("puntos.db")
     cur = con.cursor()
     cur.execute("SELECT puntos, COUNT(puntos) AS repeticiones FROM datos WHERE tipo_de_juego = ? GROUP BY puntos", (tipo_de_juego,))
-    grafica = cur.fetchall()
+    datos = cur.fetchall()
     con.close()
+    grafica = []
+    for dato in datos:
+        grafica.append({
+            'x': dato[0],
+            'y': dato[1]
+        })
     return grafica
+
 
 
 
