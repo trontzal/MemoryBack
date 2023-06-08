@@ -61,27 +61,26 @@ def read_por_juego(tipo_de_juego):
     
     return resultados
 
-import sqlite3
 
-def read_posicion(usuario, tipo_de_juego):
+def read_posicion(tipo_de_juego):
     con = sqlite3.connect("puntos.db")
     cur = con.cursor()
 
-    # Obtener los puntos del usuario y el tipo de juego específico
-    cur.execute("SELECT puntos FROM datos WHERE usuario = ? AND tipo_de_juego = ?", (usuario, tipo_de_juego))
-    user_points = cur.fetchone()
-    print("Puntos del usuario:", user_points)
-    
-    # Obtener la posición del usuario en función de los puntos
-    cur.execute("SELECT COUNT(*) FROM datos WHERE tipo_de_juego = ? AND puntos > ?", (tipo_de_juego, user_points[0]))
-    position = cur.fetchone()[0] +1
-    print("Posición del usuario:", position)
+    # Obtener los usuarios del mismo tipo de juego con los puntos en orden descendente
+    cur.execute("SELECT usuario, puntos FROM datos WHERE tipo_de_juego = ? ORDER BY puntos DESC", (tipo_de_juego,))
+    usuarios = cur.fetchall()
 
     con.close()
 
-    return str(position)
+    return usuarios
 
-print(read_posicion("anonimo", "memoriaVisual"))
+def read_grafico(tipo_de_juego):
+    con = sqlite3.connect("puntos.db")
+    cur = con.cursor()
+    cur.execute("SELECT puntos, COUNT(puntos) AS repeticiones FROM datos WHERE tipo_de_juego = ? GROUP BY puntos", (tipo_de_juego,))
+    grafica = cur.fetchall()
+    con.close()
+    return grafica
 
 
 

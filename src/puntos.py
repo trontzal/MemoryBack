@@ -12,5 +12,8 @@ def get_puntos_by_tipo_de_juego(tipo_de_juego):
 def get_posicion(usuario, tipo_de_juego):
     return read_posicion(usuario, tipo_de_juego)
 
+def get_grafico(tipo_de_juego):
+    return read_grafico(tipo_de_juego)
+
 def post_puntos(new_puntos):
     print(create(new_puntos))

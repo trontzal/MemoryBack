@@ -26,8 +26,9 @@ def tipo_de_juego(tipo_de_juego):
 def posicion(usuario, tipo_de_juego):
     return get_posicion(usuario, tipo_de_juego)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/todo/grafico/<tipo_de_juego>', methods=['GET']) #devuelve los putos y las veces que se repiten)
+def grafico(tipo_de_juego):
+    return get_grafico(tipo_de_juego)
 
 @app.route('/todo' , methods=['POST']) #Para guardar datos en la db
 def new_puntuacion():
